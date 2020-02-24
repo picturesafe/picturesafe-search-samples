@@ -2,7 +2,19 @@
 
 Samples for the https://github.com/picturesafe/picturesafe-search[picturesafe-search open source library].
 
+== Installation
+
 The picturesafe-search samples require a running Elasticsearch server from version 7.x.
 
 * https://www.elastic.co/downloads/elasticsearch[Download] and unpack the Elasticsearch official distribution.
 * Run `bin/elasticsearch` on Linux or macOS. Run `bin\elasticsearch.bat` on Windows.
+
+== Run samples
+
+Clone Maven project and run samples from IDE or command line.
+
+.Run "GettingStarted" sample
+[source]
+----
+mvn exec:java -Dexec.mainClass="de.picturesafe.search.samples.gettingstarted.GettingStarted"
+----
