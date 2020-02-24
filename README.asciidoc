@@ -1,6 +1,6 @@
 = picturesafe-search samples
 
-Samples for the https://github.com/picturesafe/picturesafe-search[picturesafe-search open source library].
+Samples for the https://github.com/picturesafe/picturesafe-search[picturesafe-search library].
 
 == Installation
 
