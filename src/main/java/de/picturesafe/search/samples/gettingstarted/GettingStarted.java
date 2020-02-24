@@ -21,7 +21,6 @@ import de.picturesafe.search.elasticsearch.SingleIndexElasticsearchService;
 import de.picturesafe.search.elasticsearch.config.DocumentBuilder;
 import de.picturesafe.search.elasticsearch.model.AccountContext;
 import de.picturesafe.search.elasticsearch.model.SearchResult;
-import de.picturesafe.search.expression.ConditionExpression;
 import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.expression.FulltextExpression;
 import de.picturesafe.search.expression.OperationExpression;
@@ -62,7 +61,7 @@ public class GettingStarted {
 
         final Expression expression = OperationExpression.builder()
                 .add(new FulltextExpression("test title"))
-                .add(new ValueExpression("id", ConditionExpression.Comparison.GE, 2))
+                .add(new ValueExpression("id", ValueExpression.Comparison.GE, 2))
                 .build();
 
         final SearchResult searchResult = singleIndexElasticsearchService.search(new AccountContext(), expression, new SearchParameter());
