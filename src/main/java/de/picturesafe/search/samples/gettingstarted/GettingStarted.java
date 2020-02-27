@@ -19,7 +19,6 @@ package de.picturesafe.search.samples.gettingstarted;
 import de.picturesafe.search.elasticsearch.DataChangeProcessingMode;
 import de.picturesafe.search.elasticsearch.SingleIndexElasticsearchService;
 import de.picturesafe.search.elasticsearch.config.DocumentBuilder;
-import de.picturesafe.search.elasticsearch.model.AccountContext;
 import de.picturesafe.search.elasticsearch.model.SearchResult;
 import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.expression.FulltextExpression;
@@ -63,7 +62,7 @@ public class GettingStarted {
                 new FulltextExpression("test title"),
                 new ValueExpression("id", ValueExpression.Comparison.GE, 2));
 
-        final SearchResult searchResult = singleIndexElasticsearchService.search(new AccountContext(), expression, SearchParameter.DEFAULT);
+        final SearchResult searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.DEFAULT);
         LOGGER.info(searchResult.toString());
 
         singleIndexElasticsearchService.deleteIndexWithAlias();
