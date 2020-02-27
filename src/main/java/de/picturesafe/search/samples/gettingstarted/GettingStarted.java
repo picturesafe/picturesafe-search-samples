@@ -63,7 +63,7 @@ public class GettingStarted {
                 new FulltextExpression("test title"),
                 new ValueExpression("id", ValueExpression.Comparison.GE, 2));
 
-        final SearchResult searchResult = singleIndexElasticsearchService.search(new AccountContext(), expression, new SearchParameter());
+        final SearchResult searchResult = singleIndexElasticsearchService.search(new AccountContext(), expression, SearchParameter.DEFAULT);
         LOGGER.info(searchResult.toString());
 
         singleIndexElasticsearchService.deleteIndexWithAlias();
