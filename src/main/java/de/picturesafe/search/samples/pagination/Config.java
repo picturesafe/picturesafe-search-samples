@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.picturesafe.search.samples.gettingstarted;
+package de.picturesafe.search.samples.pagination;
 
 import de.picturesafe.search.elasticsearch.config.ElasticsearchType;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
@@ -37,8 +37,7 @@ public class Config {
     List<FieldConfiguration> fieldConfigurations() {
         return Arrays.asList(
                 StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build(),
-                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT)
-                        .copyToFulltext(true).aggregatable(true).sortable(true).build()
+                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).build()
         );
     }
 }
