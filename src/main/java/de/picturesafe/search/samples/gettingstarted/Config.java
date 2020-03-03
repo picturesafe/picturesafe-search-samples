@@ -25,7 +25,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -35,10 +35,10 @@ public class Config {
 
     @Bean
     List<FieldConfiguration> fieldConfigurations() {
-        final List<FieldConfiguration> fieldConfigurations = new ArrayList<>();
-        fieldConfigurations.add(StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build());
-        fieldConfigurations.add(StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT)
-                .copyToFulltext(true).aggregatable(true).sortable(true).build());
-        return fieldConfigurations;
+        return Arrays.asList(
+                StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build(),
+                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT)
+                        .copyToFulltext(true).aggregatable(true).sortable(true).build()
+        );
     }
 }

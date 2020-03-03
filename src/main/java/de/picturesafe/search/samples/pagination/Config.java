@@ -20,12 +20,13 @@ import de.picturesafe.search.elasticsearch.config.ElasticsearchType;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
 import de.picturesafe.search.elasticsearch.config.StandardFieldConfiguration;
 import de.picturesafe.search.spring.configuration.DefaultElasticConfiguration;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @ComponentScan(basePackages = {"de.picturesafe.search.elasticsearch"})
@@ -34,10 +35,9 @@ public class Config {
 
     @Bean
     List<FieldConfiguration> fieldConfigurations() {
-        final List<FieldConfiguration> fieldConfigurations = new ArrayList<>();
-        fieldConfigurations.add(StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build());
-        fieldConfigurations.add(StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT)
-                .copyToFulltext(true).build());
-        return fieldConfigurations;
+        return Arrays.asList(
+                StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build(),
+                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).build()
+        );
     }
 }
