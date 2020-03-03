@@ -44,7 +44,7 @@ public class Pagination {
 
         // Search results and retrieve first page
         SearchResult searchResult = singleIndexElasticsearchService.search(expression, createSearchParameter(pageSize, pageIndex));
-        LOGGER.info("Found " + searchResult.getResultCount() + " hits of " + searchResult.getTotalHitCount() + " total hits");
+        LOGGER.info("Found {} hits of {} total hits", searchResult.getResultCount(), searchResult.getTotalHitCount());
         showSearchResult(searchResult);
 
         while (pageIndex++ < searchResult.getPageCount()) {
@@ -70,9 +70,9 @@ public class Pagination {
     }
 
     private void showSearchResult(SearchResult searchResult) {
-        LOGGER.info("Displaying results of page " + searchResult.getPageIndex() + ":");
+        LOGGER.info("Displaying results of page {}:", searchResult.getPageIndex());
         for (SearchResultItem searchResultItem : searchResult.getSearchResultItems()) {
-            LOGGER.info("Id = " + searchResultItem.getId() + ", title = " + searchResultItem.getAttribute("title"));
+            LOGGER.info("Id = {}, title = {}", searchResultItem.getId(), searchResultItem.getAttribute("title"));
         }
     }
 }
