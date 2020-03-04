@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.picturesafe.search.samples.gettingstarted;
+package de.picturesafe.search.samples.facet;
 
 import de.picturesafe.search.elasticsearch.config.ElasticsearchType;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
@@ -38,7 +38,9 @@ public class Config {
         return Arrays.asList(
                 StandardFieldConfiguration.builder(FieldConfiguration.FIELD_NAME_FULLTEXT, ElasticsearchType.TEXT).build(),
                 StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build(),
-                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).aggregatable(true).sortable(true).build()
+                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).build(),
+                // Define field as 'aggregatable' to be returned as 'Facet' in SearchResult
+                StandardFieldConfiguration.builder("city", ElasticsearchType.TEXT).copyToFulltext(true).aggregatable(true).build()
         );
     }
 }
