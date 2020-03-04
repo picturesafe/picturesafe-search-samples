@@ -23,20 +23,22 @@ public class Suggest {
     private SingleIndexElasticsearchService singleIndexElasticsearchService;
 
     public static void main(String[] args) {
-        final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Suggest.class);
-        final Suggest suggest = ctx.getBean(Suggest.class);
-        suggest.run();
-        ctx.close();
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Suggest.class)) {
+            final Suggest suggest = ctx.getBean(Suggest.class);
+            suggest.run();
+        }
     }
 
     private void run() {
-        singleIndexElasticsearchService.createIndexWithAlias();
-        createTestRecords();
+        try {
+            singleIndexElasticsearchService.createIndexWithAlias();
+            createTestRecords();
 
-        final SuggestResult suggestResult = singleIndexElasticsearchService.suggest(new SuggestExpression("Ha", 10));
-        showSuggestions(suggestResult);
-
-        singleIndexElasticsearchService.deleteIndexWithAlias();
+            final SuggestResult suggestResult = singleIndexElasticsearchService.suggest(new SuggestExpression("Ha", 10));
+            showSuggestions(suggestResult);
+        } finally {
+            singleIndexElasticsearchService.deleteIndexWithAlias();
+        }
     }
 
     private void createTestRecords() {

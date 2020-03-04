@@ -30,24 +30,26 @@ public class Facet {
     private SingleIndexElasticsearchService singleIndexElasticsearchService;
 
     public static void main(String[] args) {
-        final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Facet.class);
-        final Facet facet = ctx.getBean(Facet.class);
-        facet.run();
-        ctx.close();
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Facet.class)) {
+            final Facet facet = ctx.getBean(Facet.class);
+            facet.run();
+        }
     }
 
     private void run() {
-        singleIndexElasticsearchService.createIndexWithAlias();
-        createTestRecords();
+        try {
+            singleIndexElasticsearchService.createIndexWithAlias();
+            createTestRecords();
 
-        final Expression expression = new FulltextExpression("test title");
+            final Expression expression = new FulltextExpression("test title");
 
-        // Search results and retrieve first page
-        final SearchResult searchResult = singleIndexElasticsearchService.search(expression, createSearchParameter());
-        LOGGER.info("Found {} hits with {} facet(s)", searchResult.getResultCount(), searchResult.getFacets().size());
-        showFacets(searchResult);
-
-        singleIndexElasticsearchService.deleteIndexWithAlias();
+            // Search results and retrieve first page
+            final SearchResult searchResult = singleIndexElasticsearchService.search(expression, createSearchParameter());
+            LOGGER.info("Found {} hits with {} facet(s)", searchResult.getResultCount(), searchResult.getFacets().size());
+            showFacets(searchResult);
+        } finally {
+            singleIndexElasticsearchService.deleteIndexWithAlias();
+        }
     }
 
     private void createTestRecords() {
