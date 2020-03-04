@@ -9,7 +9,7 @@
 
     <groupId>de.picturesafe.search</groupId>
     <artifactId>picturesafe-search-samples</artifactId>
-    <version>3.1.1</version>
+    <version>3.1.2-SNAPSHOT</version>
 
     <developers>
         <developer>
