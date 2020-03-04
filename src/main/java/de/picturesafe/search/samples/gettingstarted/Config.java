@@ -38,7 +38,7 @@ public class Config {
         return Arrays.asList(
                 StandardFieldConfiguration.builder(FieldConfiguration.FIELD_NAME_FULLTEXT, ElasticsearchType.TEXT).build(),
                 StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build(),
-                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).aggregatable(true).sortable(true).build()
+                StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).sortable(true).build()
         );
     }
 }
