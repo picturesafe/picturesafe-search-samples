@@ -28,32 +28,34 @@ public class Pagination {
     private SingleIndexElasticsearchService singleIndexElasticsearchService;
 
     public static void main(String[] args) {
-        final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Pagination.class);
-        final Pagination pagination = ctx.getBean(Pagination.class);
-        pagination.run();
-        ctx.close();
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Pagination.class)) {
+            final Pagination pagination = ctx.getBean(Pagination.class);
+            pagination.run();
+        }
     }
 
     private void run() {
-        singleIndexElasticsearchService.createIndexWithAlias();
-        createTestRecords();
+        try {
+            singleIndexElasticsearchService.createIndexWithAlias();
+            createTestRecords();
 
-        final Expression expression = new FulltextExpression("test title");
-        final int pageSize = 10;
-        int pageIndex = 1;
+            final Expression expression = new FulltextExpression("test title");
+            final int pageSize = 10;
+            int pageIndex = 1;
 
-        // Search results and retrieve first page
-        SearchResult searchResult = singleIndexElasticsearchService.search(expression, createSearchParameter(pageSize, pageIndex));
-        LOGGER.info("Found {} hits of {} total hits", searchResult.getResultCount(), searchResult.getTotalHitCount());
-        showSearchResult(searchResult);
-
-        while (pageIndex++ < searchResult.getPageCount()) {
-            // retrieve results of next page
-            searchResult = singleIndexElasticsearchService.search(expression, createSearchParameter(pageSize, pageIndex));
+            // Search results and retrieve first page
+            SearchResult searchResult = singleIndexElasticsearchService.search(expression, createSearchParameter(pageSize, pageIndex));
+            LOGGER.info("Found {} hits of {} total hits", searchResult.getResultCount(), searchResult.getTotalHitCount());
             showSearchResult(searchResult);
-        }
 
-        singleIndexElasticsearchService.deleteIndexWithAlias();
+            while (pageIndex++ < searchResult.getPageCount()) {
+                // retrieve results of next page
+                searchResult = singleIndexElasticsearchService.search(expression, createSearchParameter(pageSize, pageIndex));
+                showSearchResult(searchResult);
+            }
+        } finally {
+            singleIndexElasticsearchService.deleteIndexWithAlias();
+        }
     }
 
     private void createTestRecords() {
