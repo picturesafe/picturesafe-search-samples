@@ -19,7 +19,6 @@ package de.picturesafe.search.samples.suggest;
 import de.picturesafe.search.elasticsearch.config.ElasticsearchType;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
 import de.picturesafe.search.elasticsearch.config.StandardFieldConfiguration;
-import de.picturesafe.search.elasticsearch.config.SuggestFieldConfiguration;
 import de.picturesafe.search.spring.configuration.DefaultElasticConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,9 +36,9 @@ public class Config {
     @Bean
     List<FieldConfiguration> fieldConfigurations() {
         return Arrays.asList(
+                FieldConfiguration.ID_FIELD,
                 // Add SuggestFieldConfiguration to enable suggest queries
-                new SuggestFieldConfiguration(),
-                StandardFieldConfiguration.builder("id", ElasticsearchType.INTEGER).sortable(true).build(),
+                FieldConfiguration.SUGGEST_FIELD,
                 // Define field 'city' as 'suggestable' so it can be used within SuggestExpressions.
                 StandardFieldConfiguration.builder("city", ElasticsearchType.TEXT).copyToSuggest(true).build()
         );
