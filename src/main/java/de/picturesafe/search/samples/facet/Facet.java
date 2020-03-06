@@ -71,7 +71,7 @@ public class Facet {
 
     private SearchParameter createSearchParameter() {
         return SearchParameter.builder().pageSize(10).pageIndex(1)
-                .addSortOption(new SortOption("id", SortOption.Direction.ASC))
+                .sortOptions(SortOption.asc("id"))
                 .aggregationFields(new AggregationField("city", 10)) // Deliver up to 10 facet items for field 'city'
                 .build();
     }

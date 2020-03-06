@@ -66,9 +66,7 @@ public class Pagination {
     }
 
     private SearchParameter createSearchParameter(int pageSize, int pageIndex) {
-        return SearchParameter.builder().pageSize(pageSize).pageIndex(pageIndex)
-                .addSortOption(new SortOption("id", SortOption.Direction.ASC))
-                .build();
+        return SearchParameter.builder().pageSize(pageSize).pageIndex(pageIndex).sortOptions(SortOption.asc("id")).build();
     }
 
     private void showSearchResult(SearchResult searchResult) {
