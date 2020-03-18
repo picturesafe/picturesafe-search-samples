@@ -20,7 +20,7 @@ import de.picturesafe.search.elasticsearch.FieldConfigurationProvider;
 import de.picturesafe.search.elasticsearch.config.ElasticsearchType;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
 import de.picturesafe.search.elasticsearch.config.IndexPresetConfiguration;
-import de.picturesafe.search.elasticsearch.config.StandardFieldConfiguration;
+import de.picturesafe.search.elasticsearch.config.impl.StandardFieldConfiguration;
 import de.picturesafe.search.elasticsearch.config.impl.StandardIndexPresetConfiguration;
 import de.picturesafe.search.elasticsearch.impl.StaticFieldConfigurationProvider;
 import de.picturesafe.search.spring.configuration.DefaultClientConfiguration;

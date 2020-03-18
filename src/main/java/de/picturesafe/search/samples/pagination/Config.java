@@ -18,7 +18,7 @@ package de.picturesafe.search.samples.pagination;
 
 import de.picturesafe.search.elasticsearch.config.ElasticsearchType;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
-import de.picturesafe.search.elasticsearch.config.StandardFieldConfiguration;
+import de.picturesafe.search.elasticsearch.config.impl.StandardFieldConfiguration;
 import de.picturesafe.search.spring.configuration.DefaultElasticConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
