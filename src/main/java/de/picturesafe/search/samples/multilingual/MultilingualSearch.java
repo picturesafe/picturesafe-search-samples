@@ -62,7 +62,7 @@ public class MultilingualSearch {
                             .build());
 
             final SearchParameter searchParameter = SearchParameter.builder().language("en").build();
-            final Expression expression = new ValueExpression("title",ValueExpression.Comparison.LIKE, "english");
+            final Expression expression = new ValueExpression("title", ValueExpression.Comparison.LIKE, "english");
             final SearchResult searchResult = singleIndexElasticsearchService.search(expression, searchParameter);
 
             LOGGER.info(searchResult.toString());
