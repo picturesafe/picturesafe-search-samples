@@ -2,7 +2,7 @@ package de.picturesafe.search.samples.pagination;
 
 import de.picturesafe.search.elasticsearch.DataChangeProcessingMode;
 import de.picturesafe.search.elasticsearch.SingleIndexElasticsearchService;
-import de.picturesafe.search.elasticsearch.config.DocumentBuilder;
+import de.picturesafe.search.elasticsearch.model.DocumentBuilder;
 import de.picturesafe.search.elasticsearch.model.SearchResult;
 import de.picturesafe.search.elasticsearch.model.SearchResultItem;
 import de.picturesafe.search.expression.Expression;
