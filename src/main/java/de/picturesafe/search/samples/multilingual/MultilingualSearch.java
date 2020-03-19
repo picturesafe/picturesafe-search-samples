@@ -30,6 +30,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Component
 @ComponentScan
 public class MultilingualSearch {
@@ -50,16 +52,16 @@ public class MultilingualSearch {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
 
-            singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
+            singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, Arrays.asList(
                     DocumentBuilder.id(1)
                             .put("title.en", "This is an english test title")
                             .put("title.de", "Dies ist ein deutscher Test-Titel")
-                            .build());
-            singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
+                            .build(),
                     DocumentBuilder.id(2)
                             .put("title.en", "This is another english test title")
                             .put("title.de", "Dies ist ein anderer deutscher Test-Titel")
-                            .build());
+                            .build()
+            ));
 
             final SearchParameter searchParameter = SearchParameter.builder().language("en").build();
             final Expression expression = new ValueExpression("title", ValueExpression.Comparison.LIKE, "english");
