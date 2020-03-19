@@ -2,8 +2,8 @@ package de.picturesafe.search.samples.suggest;
 
 import de.picturesafe.search.elasticsearch.DataChangeProcessingMode;
 import de.picturesafe.search.elasticsearch.SingleIndexElasticsearchService;
-import de.picturesafe.search.elasticsearch.config.DocumentBuilder;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
+import de.picturesafe.search.elasticsearch.model.DocumentBuilder;
 import de.picturesafe.search.elasticsearch.model.SuggestResult;
 import de.picturesafe.search.expression.SuggestExpression;
 import org.slf4j.Logger;
