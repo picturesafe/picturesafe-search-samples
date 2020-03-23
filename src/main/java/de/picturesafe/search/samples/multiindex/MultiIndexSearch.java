@@ -30,6 +30,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 import static de.picturesafe.search.samples.multiindex.Config.FIRST_INDEX_ALIAS;
 import static de.picturesafe.search.samples.multiindex.Config.SECOND_INDEX_ALIAS;
 
@@ -69,14 +71,14 @@ public class MultiIndexSearch {
     }
 
     private void createTestRecords() {
-        elasticsearchService.addToIndex(FIRST_INDEX_ALIAS, DataChangeProcessingMode.BLOCKING,
-                DocumentBuilder.id(1).put("title", "This is a test title").build());
-        elasticsearchService.addToIndex(FIRST_INDEX_ALIAS, DataChangeProcessingMode.BLOCKING,
-                DocumentBuilder.id(2).put("title", "This is another test title").build());
+        elasticsearchService.addToIndex(FIRST_INDEX_ALIAS, DataChangeProcessingMode.BLOCKING, Arrays.asList(
+                DocumentBuilder.id(1).put("title", "This is a test title").build(),
+                DocumentBuilder.id(2).put("title", "This is another test title").build()
+        ));
 
-        elasticsearchService.addToIndex(SECOND_INDEX_ALIAS, DataChangeProcessingMode.BLOCKING,
-                DocumentBuilder.id(1).put("firstname", "John").put("lastname", "Doe").build());
-        elasticsearchService.addToIndex(SECOND_INDEX_ALIAS, DataChangeProcessingMode.BLOCKING,
-                DocumentBuilder.id(2).put("firstname", "Jane").put("lastname", "Doe").build());
+        elasticsearchService.addToIndex(SECOND_INDEX_ALIAS, DataChangeProcessingMode.BLOCKING, Arrays.asList(
+                DocumentBuilder.id(1).put("firstname", "John").put("lastname", "Doe").build(),
+                DocumentBuilder.id(2).put("firstname", "Jane").put("lastname", "Doe").build()
+        ));
     }
 }
