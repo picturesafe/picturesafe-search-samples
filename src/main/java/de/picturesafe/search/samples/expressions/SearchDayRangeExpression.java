@@ -31,6 +31,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 @Component
@@ -53,17 +54,19 @@ public class SearchDayRangeExpression {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
 
-            singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(1)
-                    .put("title", "This is a test title")
-                    .put("created", getDate("01.01.2020")).build());
-            singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(2)
-                    .put("title", "This is another test title")
-                    .put("created", getDate("12.01.2020")).build());
-            singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(3)
-                    .put("title", "This is one more test title")
-                    .put("created", getDate("31.12.2020")).build());
+            singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, Arrays.asList(
+                    DocumentBuilder.id(1)
+                            .put("title", "This is a test title")
+                            .put("created", getDate("01.01.2020")).build(),
+                    DocumentBuilder.id(2)
+                            .put("title", "This is another test title")
+                            .put("created", getDate("12.01.2020")).build(),
+                    DocumentBuilder.id(3)
+                            .put("title", "This is one more test title")
+                            .put("created", getDate("31.12.2020")).build()
+            ));
 
-            Expression expression = new DayRangeExpression("created", getDate("10.01.2020"), getDate("31.12.2020"));
+            final Expression expression = new DayRangeExpression("created", getDate("10.01.2020"), getDate("31.12.2020"));
 
             final SearchResult searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.DEFAULT);
             LOGGER.info(searchResult.toString());

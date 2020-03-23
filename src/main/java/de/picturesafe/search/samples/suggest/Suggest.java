@@ -13,6 +13,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Component
 @ComponentScan
 public class Suggest {
@@ -42,11 +44,13 @@ public class Suggest {
     }
 
     private void createTestRecords() {
-        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(1).put("city", "Hamburg").build());
-        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(2).put("city", "Berlin").build());
-        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(3).put("city", "Hannover").build());
-        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(4).put("city", "Freiburg").build());
-        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, DocumentBuilder.id(5).put("city", "Hamburg").build());
+        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, Arrays.asList(
+                DocumentBuilder.id(1).put("city", "Hamburg").build(),
+                DocumentBuilder.id(2).put("city", "Berlin").build(),
+                DocumentBuilder.id(3).put("city", "Hannover").build(),
+                DocumentBuilder.id(4).put("city", "Freiburg").build(),
+                DocumentBuilder.id(5).put("city", "Hamburg").build()
+        ));
     }
 
     private void showSuggestions(SuggestResult suggestResult) {
