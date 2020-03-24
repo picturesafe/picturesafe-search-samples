@@ -55,8 +55,8 @@ public class SearchIsNullExpression {
             singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, Arrays.asList(
                     DocumentBuilder.id(1).put("title", "This is a test title").build(),
                     DocumentBuilder.id(2).put("title", "This is another test title").build(),
-                    DocumentBuilder.id(3).put("title", null).build(),
-                    DocumentBuilder.id(4).put("title", null).build()
+                    DocumentBuilder.id(3).put("title", (String) null).build(),
+                    DocumentBuilder.id(4).put("title", (String) null).build()
             ));
 
             final Expression expression = new IsNullExpression("title");
