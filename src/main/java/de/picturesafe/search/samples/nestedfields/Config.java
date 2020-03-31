@@ -43,6 +43,7 @@ public class Config {
                                 StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).sortable(true).build(),
                                 StandardFieldConfiguration.builder("caption", ElasticsearchType.TEXT).copyToFulltext(true).build(),
                                 StandardFieldConfiguration.builder("author", ElasticsearchType.TEXT).copyToFulltext(true).build(),
+                                StandardFieldConfiguration.builder("page", ElasticsearchType.INTEGER).sortable(true).build(),
                                 StandardFieldConfiguration.builder("date", ElasticsearchType.DATE).sortable(true).build()
                         ).build()
         );

@@ -20,10 +20,15 @@ import de.picturesafe.search.elasticsearch.DataChangeProcessingMode;
 import de.picturesafe.search.elasticsearch.SingleIndexElasticsearchService;
 import de.picturesafe.search.elasticsearch.model.DocumentBuilder;
 import de.picturesafe.search.elasticsearch.model.SearchResult;
+import de.picturesafe.search.expression.DayExpression;
+import de.picturesafe.search.expression.DayRangeExpression;
 import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.expression.FulltextExpression;
+import de.picturesafe.search.expression.InExpression;
+import de.picturesafe.search.expression.RangeValueExpression;
 import de.picturesafe.search.expression.ValueExpression;
 import de.picturesafe.search.parameter.SearchParameter;
+import de.picturesafe.search.parameter.SortOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +67,7 @@ public class SearchNestedFields {
                                     .put("title", "This is a test title")
                                     .put("caption", "This is a test caption")
                                     .put("author", "John Doe")
+                                    .put("page", 1)
                                     .put("date", getDate("10.03.2020")).build()
                             )).build(),
                     DocumentBuilder.id(2)
@@ -69,6 +75,7 @@ public class SearchNestedFields {
                                     .put("title", "This is another test title")
                                     .put("caption", "This is another test caption")
                                     .put("author", "Jane Doe")
+                                    .put("page", 2)
                                     .put("date", getDate("12.03.2020")).build()
                             )).build(),
                     DocumentBuilder.id(3)
@@ -76,6 +83,7 @@ public class SearchNestedFields {
                                     .put("title", "This is one more test title")
                                     .put("caption", "This is one more test caption")
                                     .put("author", "Jane Doe")
+                                    .put("page", 3)
                                     .put("date", getDate("12.03.2020")).build()
                             )).build()
             ));
@@ -88,8 +96,24 @@ public class SearchNestedFields {
             searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.DEFAULT);
             LOGGER.info(searchResult.toString());
 
-            expression = new ValueExpression("article.date", getDate("12.03.2020"));
+            expression = new InExpression("article.page", 1, 3);
+            searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.builder().sortOptions(SortOption.asc("article.page")).build());
+            LOGGER.info(searchResult.toString());
+
+            expression = new RangeValueExpression("article.page", 1, 3);
+            searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.builder().sortOptions(SortOption.asc("article.page")).build());
+            LOGGER.info(searchResult.toString());
+
+            expression = new DayExpression("article.date", getDate("12.03.2020"));
             searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.DEFAULT);
+            LOGGER.info(searchResult.toString());
+
+            expression = new DayExpression("article.date", DayExpression.Comparison.GE, getDate("01.03.2020"));
+            searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.builder().sortOptions(SortOption.desc("article.date")).build());
+            LOGGER.info(searchResult.toString());
+
+            expression = new DayRangeExpression("article.date", getDate("01.03.2020"), getDate("31.03.2020"));
+            searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.builder().sortOptions(SortOption.desc("article.date")).build());
             LOGGER.info(searchResult.toString());
         } finally {
             singleIndexElasticsearchService.deleteIndexWithAlias();
