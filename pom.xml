@@ -6,6 +6,14 @@
 
     <name>picturesafe-search samples</name>
     <description>Samples for the picturesafe-search open source library</description>
+    <url>https://github.com/picturesafe/picturesafe-search-samples</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <groupId>de.picturesafe.search</groupId>
     <artifactId>picturesafe-search-samples</artifactId>
