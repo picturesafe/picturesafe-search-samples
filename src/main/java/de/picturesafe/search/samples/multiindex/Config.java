@@ -17,12 +17,14 @@
 package de.picturesafe.search.samples.multiindex;
 
 import de.picturesafe.search.elasticsearch.FieldConfigurationProvider;
+import de.picturesafe.search.elasticsearch.IndexPresetConfigurationProvider;
 import de.picturesafe.search.elasticsearch.config.ElasticsearchType;
 import de.picturesafe.search.elasticsearch.config.FieldConfiguration;
 import de.picturesafe.search.elasticsearch.config.IndexPresetConfiguration;
 import de.picturesafe.search.elasticsearch.config.impl.StandardFieldConfiguration;
 import de.picturesafe.search.elasticsearch.config.impl.StandardIndexPresetConfiguration;
 import de.picturesafe.search.elasticsearch.impl.StaticFieldConfigurationProvider;
+import de.picturesafe.search.elasticsearch.impl.StaticIndexPresetConfigurationProvider;
 import de.picturesafe.search.spring.configuration.DefaultClientConfiguration;
 import de.picturesafe.search.spring.configuration.DefaultQueryConfiguration;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,11 +74,11 @@ public class Config {
     private int maxResultWindow;
 
     @Bean
-    public List<IndexPresetConfiguration> indexPresetConfiguration() {
-        return Arrays.asList(
+    IndexPresetConfigurationProvider indexPresetConfigurationProvider() {
+        return new StaticIndexPresetConfigurationProvider(Arrays.asList(
                 getIndexPresetConfiguration(myFirstIndexAlias, myFirstIndexNamePrefix),
                 getIndexPresetConfiguration(mySecondIndexAlias, mySecondIndexNamePrefix)
-        );
+        ));
     }
 
     @Bean
@@ -85,18 +87,6 @@ public class Config {
         fieldConfigurationMap.put(myFirstIndexAlias, firstIndexfieldConfigurations());
         fieldConfigurationMap.put(mySecondIndexAlias, secondIndexfieldConfigurations());
         return new StaticFieldConfigurationProvider(fieldConfigurationMap);
-    }
-
-    private Map<String, String> defaultCharMapping() {
-        final Map<String, String> charMapping = new HashMap<>();
-        charMapping.put("ä", "ae");
-        charMapping.put("ö", "oe");
-        charMapping.put("ü", "ue");
-        charMapping.put("ß", "ss");
-        charMapping.put("Ä", "Ae");
-        charMapping.put("Ö", "Oe");
-        charMapping.put("Ü", "Ue");
-        return charMapping;
     }
 
     private List<FieldConfiguration> firstIndexfieldConfigurations() {
@@ -121,5 +111,17 @@ public class Config {
         cfg.setFieldsLimit(fieldsLimit);
         cfg.setCharMappings(defaultCharMapping());
         return cfg;
+    }
+
+    private Map<String, String> defaultCharMapping() {
+        final Map<String, String> charMapping = new HashMap<>();
+        charMapping.put("ä", "ae");
+        charMapping.put("ö", "oe");
+        charMapping.put("ü", "ue");
+        charMapping.put("ß", "ss");
+        charMapping.put("Ä", "Ae");
+        charMapping.put("Ö", "Oe");
+        charMapping.put("Ü", "Ue");
+        return charMapping;
     }
 }
