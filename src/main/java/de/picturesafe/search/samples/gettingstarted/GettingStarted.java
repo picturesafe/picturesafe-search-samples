@@ -44,7 +44,10 @@ public class GettingStarted {
     private SingleIndexElasticsearchService singleIndexElasticsearchService;
 
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(GettingStarted.class)) {
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext()) {
+            ctx.getEnvironment().setActiveProfiles("single-index");
+            ctx.register(GettingStarted.class);
+            ctx.refresh();
             final GettingStarted gettingStarted = ctx.getBean(GettingStarted.class);
             gettingStarted.run();
         }
