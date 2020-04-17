@@ -55,14 +55,14 @@ public class GettingStarted {
             singleIndexElasticsearchService.createIndexWithAlias();
 
             singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, Arrays.asList(
-                    DocumentBuilder.id(1).put("title", "This is a test title").build(),
-                    DocumentBuilder.id(2).put("title", "This is another test title").build(),
-                    DocumentBuilder.id(3).put("title", "This is one more test title").build()
+                    DocumentBuilder.id(1).put("title", "This is a test title").put("count", 101).build(),
+                    DocumentBuilder.id(2).put("title", "This is another test title").put("count", 102).build(),
+                    DocumentBuilder.id(3).put("title", "This is one more test title").put("count", 103).build()
             ));
 
             final Expression expression = OperationExpression.and(
                     new FulltextExpression("test title"),
-                    new ValueExpression("id", ValueExpression.Comparison.GE, 2));
+                    new ValueExpression("count", ValueExpression.Comparison.GE, 102));
 
             final SearchResult searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.DEFAULT);
             LOGGER.info(searchResult.toString());
