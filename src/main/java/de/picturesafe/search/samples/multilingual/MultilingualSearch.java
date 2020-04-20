@@ -55,10 +55,12 @@ public class MultilingualSearch {
             singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, Arrays.asList(
                     DocumentBuilder.id(1)
                             .put("title.en", "This is an english test title")
-                            .put("title.de", "Dies ist ein deutscher Test-Titel").build(),
+                            .put("title.de", "Dies ist ein deutscher Test-Titel")
+                            .put("title.fr", "Ceci est un titre en français").build(),
                     DocumentBuilder.id(2)
                             .put("title.en", "This is another english test title")
-                            .put("title.de", "Dies ist ein anderer deutscher Test-Titel").build()
+                            .put("title.de", "Dies ist ein anderer deutscher Test-Titel")
+                            .put("title.fr", "Ceci est un autre titre en français").build()
             ));
 
             final SearchParameter searchParameter = SearchParameter.builder().language("en").build();
