@@ -109,7 +109,7 @@ public class Config {
         final StandardIndexPresetConfiguration cfg = new StandardIndexPresetConfiguration(indexAlias, indexNamePrefix,
                 indexNameDateFormat, numberOfShards, numberOfReplicas, maxResultWindow);
         cfg.setFieldsLimit(fieldsLimit);
-        cfg.setCharMappings(defaultCharMapping());
+        cfg.addDefaultAnalyzerSettings(defaultCharMapping());
         return cfg;
     }
 
