@@ -36,9 +36,10 @@ public class CustomIndexConfiguration extends DefaultIndexConfiguration {
         return cfg;
     }
 
+    // Override method to disable the picturesafe-search built-in default anaylzer.
+    // Alternatively add the following property to elasticsearch.properties: elasticsearch.index.default_analyzer.enabled=false
+    @Override
     protected boolean isDefaultAnalyzerEnabled() {
         return false;
     }
-    // Alternatively add the following property to elasticsearch.properties:
-    // elasticsearch.index.default_analyzer.enabled=false
 }
