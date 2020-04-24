@@ -6,7 +6,6 @@ import de.picturesafe.search.spring.configuration.DefaultIndexConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
-import java.util.Collections;
 
 public class CustomIndexConfiguration extends DefaultIndexConfiguration {
 
@@ -29,11 +28,17 @@ public class CustomIndexConfiguration extends DefaultIndexConfiguration {
                     .field("tokenizer", "file_name_tokenizer")
                     .array("filter", "lowercase")
                     .endObject();
-            cfg.setCustomTokenizers(Collections.singletonList(fileNameTokenizer));
-            cfg.setCustomAnalyzers(Collections.singletonList(fileNameAnalyzer));
+            cfg.addCustomTokenizers(fileNameTokenizer);
+            cfg.addCustomAnalyzers(fileNameAnalyzer);
         } catch (IOException e) {
             throw new RuntimeException("Failed to set custom analyzer!", e);
         }
         return cfg;
     }
+
+    protected boolean isDefaultAnalyzerEnabled() {
+        return false;
+    }
+    // Alternatively add the following property to elasticsearch.properties:
+    // elasticsearch.index.default_analyzer.enabled=false
 }

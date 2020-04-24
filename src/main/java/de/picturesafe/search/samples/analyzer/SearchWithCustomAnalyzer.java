@@ -68,6 +68,9 @@ public class SearchWithCustomAnalyzer {
 
             searchResult = singleIndexElasticsearchService.search(new ValueExpression("filename", "image"), SearchParameter.DEFAULT);
             LOGGER.info(searchResult.toString());
+
+            searchResult = singleIndexElasticsearchService.search(new ValueExpression("filename", "my_image.jpg"), SearchParameter.DEFAULT);
+            LOGGER.info(searchResult.toString());
         } finally {
             singleIndexElasticsearchService.deleteIndexWithAlias();
         }
