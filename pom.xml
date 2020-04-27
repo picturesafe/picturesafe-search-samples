@@ -17,7 +17,7 @@
 
     <groupId>de.picturesafe.search</groupId>
     <artifactId>picturesafe-search-samples</artifactId>
-    <version>3.3.0</version>
+    <version>3.4.0-SNAPSHOT</version>
 
     <developers>
         <developer>
@@ -34,7 +34,7 @@
         </developer>
         <developer>
             <id>araithel</id>
-            <name>Alexander Raithel</name>
+            <name>Alexander Raitgit statuhel</name>
             <email>araithel@picturesafe.de</email>
             <roles>
                 <role>Architect</role>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>de.picturesafe.search</groupId>
             <artifactId>picturesafe-search</artifactId>
-            <version>3.3.0</version>
+            <version>3.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
