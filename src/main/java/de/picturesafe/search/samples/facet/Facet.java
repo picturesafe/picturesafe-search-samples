@@ -8,9 +8,9 @@ import de.picturesafe.search.elasticsearch.model.ResultFacetItem;
 import de.picturesafe.search.elasticsearch.model.SearchResult;
 import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.expression.FulltextExpression;
-import de.picturesafe.search.parameter.AggregationField;
 import de.picturesafe.search.parameter.SearchParameter;
 import de.picturesafe.search.parameter.SortOption;
+import de.picturesafe.search.parameter.aggregation.TermsAggregation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public class Facet {
     private SearchParameter createSearchParameter() {
         return SearchParameter.builder().pageSize(10).pageIndex(1)
                 .sortOptions(SortOption.asc("id"))
-                .aggregationFields(new AggregationField("city", 10)) // Deliver up to 10 facet items for field 'city'
+                .aggregations(TermsAggregation.field("city").maxCount(10)) // Deliver up to 10 facet items for field 'city'
                 .build();
     }
 
