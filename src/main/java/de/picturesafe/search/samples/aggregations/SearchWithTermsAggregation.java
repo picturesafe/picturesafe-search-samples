@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.picturesafe.search.samples.facet;
+package de.picturesafe.search.samples.aggregations;
 
 import de.picturesafe.search.elasticsearch.DataChangeProcessingMode;
 import de.picturesafe.search.elasticsearch.SingleIndexElasticsearchService;
@@ -36,24 +36,18 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.LongStream;
 
-/**
- * Aggregation/Facet sample.
- *
- * @deprecated Use samples of package {@link de.picturesafe.search.samples.aggregations} instead.
- */
 @Component
 @ComponentScan
-@Deprecated
-public class Facet {
+public class SearchWithTermsAggregation {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Facet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchWithTermsAggregation.class);
 
     @Autowired
     private SingleIndexElasticsearchService singleIndexElasticsearchService;
 
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Facet.class)) {
-            final Facet facet = ctx.getBean(Facet.class);
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(SearchWithTermsAggregation.class)) {
+            final SearchWithTermsAggregation facet = ctx.getBean(SearchWithTermsAggregation.class);
             facet.run();
         }
     }
@@ -94,7 +88,7 @@ public class Facet {
     private SearchParameter createSearchParameter() {
         return SearchParameter.builder().pageSize(10).pageIndex(1)
                 .sortOptions(SortOption.asc("id"))
-                .aggregations(TermsAggregation.field("city").maxCount(10)) // Deliver up to 10 facet items for field 'city'
+                .aggregations(TermsAggregation.field("city").maxCount(10)) // Deliver up to 10 facet items for field 'city' via TermsAggregation
                 .build();
     }
 
