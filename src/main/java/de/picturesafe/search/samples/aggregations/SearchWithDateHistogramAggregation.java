@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 import static de.picturesafe.search.parameter.aggregation.DateHistogramAggregation.IntervalType.CALENDAR;
@@ -79,19 +80,19 @@ public class SearchWithDateHistogramAggregation {
         final Instant oneYearAgo = now.minus(365, ChronoUnit.DAYS);
 
         // Insert 20 test records with create date 'now'
-        LongStream.range(1, 21)
-                .forEach(id -> singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
-                        DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(now)).build()));
+        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BACKGROUND, LongStream.range(1, 21).boxed()
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(now)).build())
+                .collect(Collectors.toList()));
 
         // Insert 10 test records with create date 'yesterday'
-        LongStream.range(21, 31)
-                .forEach(id -> singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
-                        DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(yesterday)).build()));
+        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BACKGROUND, LongStream.range(21, 31).boxed()
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(yesterday)).build())
+                .collect(Collectors.toList()));
 
         // Insert 5 test records with create date 'one year ago'
-        LongStream.range(31, 36)
-                .forEach(id -> singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
-                        DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(oneYearAgo)).build()));
+        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, LongStream.range(31, 36).boxed()
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(oneYearAgo)).build())
+                .collect(Collectors.toList()));
     }
 
     private SearchParameter createSearchParameter() {

@@ -34,6 +34,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 @Component
@@ -70,19 +71,19 @@ public class SearchWithTermsAggregation {
 
     private void createTestRecords() {
         // Insert 20 test records with city 'Hamburg'
-        LongStream.range(1, 21)
-                .forEach(id -> singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
-                        DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "Hamburg").build()));
+        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BACKGROUND, LongStream.range(1, 21).boxed()
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "Hamburg").build())
+                .collect(Collectors.toList()));
 
         // Insert 10 test records with city 'London'
-        LongStream.range(21, 31)
-                .forEach(id -> singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
-                        DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "London").build()));
+        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BACKGROUND, LongStream.range(21, 31).boxed()
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "London").build())
+                .collect(Collectors.toList()));
 
         // Insert 5 test records with city 'Paris'
-        LongStream.range(31, 36)
-                .forEach(id -> singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING,
-                        DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "Paris").build()));
+        singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, LongStream.range(31, 36).boxed()
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "Paris").build())
+                .collect(Collectors.toList()));
     }
 
     private SearchParameter createSearchParameter() {
