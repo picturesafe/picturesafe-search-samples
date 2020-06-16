@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.picturesafe.search.samples.facet;
+package de.picturesafe.search.samples.aggregations;
 
 import de.picturesafe.search.elasticsearch.DataChangeProcessingMode;
 import de.picturesafe.search.elasticsearch.SingleIndexElasticsearchService;
@@ -26,7 +26,7 @@ import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.expression.FulltextExpression;
 import de.picturesafe.search.parameter.SearchParameter;
 import de.picturesafe.search.parameter.SortOption;
-import de.picturesafe.search.parameter.aggregation.TermsAggregation;
+import de.picturesafe.search.parameter.aggregation.DateHistogramAggregation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,27 +34,26 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-/**
- * Aggregation/Facet sample.
- *
- * @deprecated Use samples of package {@link de.picturesafe.search.samples.aggregations} instead.
- */
+import static de.picturesafe.search.parameter.aggregation.DateHistogramAggregation.IntervalType.CALENDAR;
+
 @Component
 @ComponentScan
-@Deprecated
-public class Facet {
+public class SearchWithDateHistogramAggregation {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Facet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchWithDateHistogramAggregation.class);
 
     @Autowired
     private SingleIndexElasticsearchService singleIndexElasticsearchService;
 
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Facet.class)) {
-            final Facet facet = ctx.getBean(Facet.class);
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(SearchWithDateHistogramAggregation.class)) {
+            final SearchWithDateHistogramAggregation facet = ctx.getBean(SearchWithDateHistogramAggregation.class);
             facet.run();
         }
     }
@@ -76,26 +75,30 @@ public class Facet {
     }
 
     private void createTestRecords() {
-        // Insert 20 test records with city 'Hamburg'
+        final Instant now = Instant.now();
+        final Instant yesterday = now.minus(1, ChronoUnit.DAYS);
+        final Instant oneYearAgo = now.minus(365, ChronoUnit.DAYS);
+
+        // Insert 20 test records with create date 'now'
         singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BACKGROUND, LongStream.range(1, 21).boxed()
-                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "Hamburg").build())
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(now)).build())
                 .collect(Collectors.toList()));
 
-        // Insert 10 test records with city 'London'
+        // Insert 10 test records with create date 'yesterday'
         singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BACKGROUND, LongStream.range(21, 31).boxed()
-                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "London").build())
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(yesterday)).build())
                 .collect(Collectors.toList()));
 
-        // Insert 5 test records with city 'Paris'
+        // Insert 5 test records with create date 'one year ago'
         singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, LongStream.range(31, 36).boxed()
-                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("city", "Paris").build())
+                .map(id -> DocumentBuilder.id(id).put("title", "This is a test title " + id).put("created", Date.from(oneYearAgo)).build())
                 .collect(Collectors.toList()));
     }
 
     private SearchParameter createSearchParameter() {
         return SearchParameter.builder().pageSize(10).pageIndex(1)
                 .sortOptions(SortOption.asc("id"))
-                .aggregations(TermsAggregation.field("city").maxCount(10)) // Deliver up to 10 facet items for field 'city'
+                .aggregations(DateHistogramAggregation.field("created").interval(CALENDAR, "1y").format("yyyy").name("years"))
                 .build();
     }
 
