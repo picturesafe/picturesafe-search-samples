@@ -39,7 +39,8 @@ public class Config {
                 FieldConfiguration.ID_FIELD,
                 FieldConfiguration.FULLTEXT_FIELD,
                 StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).sortable(true).build(),
-                StandardFieldConfiguration.builder("caption", ElasticsearchType.TEXT).copyToFulltext(true).sortable(true).build()
+                StandardFieldConfiguration.builder("caption", ElasticsearchType.TEXT).copyToFulltext(true).sortable(true).build(),
+                StandardFieldConfiguration.builder("quantities", ElasticsearchType.INTEGER).sortable(true).build()
         );
     }
 }
