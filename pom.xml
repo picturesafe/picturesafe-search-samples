@@ -58,7 +58,7 @@
         <dependency>
             <groupId>de.picturesafe.search</groupId>
             <artifactId>picturesafe-search</artifactId>
-            <version>3.5.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
