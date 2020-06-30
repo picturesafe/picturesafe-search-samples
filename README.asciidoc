@@ -19,6 +19,8 @@ Clone Maven project and run samples from IDE or command line.
 mvn exec:java -Dexec.mainClass="de.picturesafe.search.samples.gettingstarted.GettingStarted"
 ----
 
+== Sample output
+
 The output is logged out on the console (see log4j2.xml), for example:
 
 image::images/console_output1.png[]
