@@ -18,3 +18,74 @@ Clone Maven project and run samples from IDE or command line.
 ----
 mvn exec:java -Dexec.mainClass="de.picturesafe.search.samples.gettingstarted.GettingStarted"
 ----
+
+The output is logged out on the console (see log4j2.xml), for example:
+
+image::images/console_output1.png[]
+
+By default, the internally generated Elasticsearch request (and response) is also logged out, so that it can be examined how Elasticsearch executes the expression-based Java search:
+
+image::images/console_output2.png[]
+
+The following Java search leads to the Elasticsearch request below:
+
+.Expression-based Java search
+[source,java]
+----
+Expression expression = OperationExpression.and(
+    new FulltextExpression("test title"),
+    new ValueExpression("count", ValueExpression.Comparison.GE, 102));
+
+SearchResult searchResult = singleIndexElasticsearchService.search(expression, SearchParameter.DEFAULT);
+----
+
+.Internally generated Elasticsearch request
+[source,json]
+----
+{
+	"from": 0,
+	"size": 100,
+	"query": {
+		"bool": {
+			"must": [{
+				"bool": {
+					"filter": [{
+						"query_string": {
+							"query": "(test && title)",
+							"fields": ["fulltext^1.0"],
+							"type": "best_fields",
+							"default_operator": "and",
+							"max_determinized_states": 10000,
+							"enable_position_increments": true,
+							"fuzziness": "AUTO",
+							"fuzzy_prefix_length": 0,
+							"fuzzy_max_expansions": 50,
+							"phrase_slop": 0,
+							"analyze_wildcard": false,
+							"escape": false,
+							"auto_generate_synonyms_phrase_query": true,
+							"fuzzy_transpositions": true,
+							"boost": 1.0
+						}
+					}],
+					"adjust_pure_negative": true,
+					"boost": 1.0
+				}
+			}],
+			"filter": [{
+				"range": {
+					"count": {
+						"from": 102,
+						"to": null,
+						"include_lower": true,
+						"include_upper": true,
+						"boost": 1.0
+					}
+				}
+			}],
+			"adjust_pure_negative": true,
+			"boost": 1.0
+		}
+	}
+}
+----
