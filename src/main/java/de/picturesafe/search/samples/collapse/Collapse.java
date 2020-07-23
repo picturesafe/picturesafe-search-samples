@@ -56,12 +56,12 @@ public class Collapse {
             singleIndexElasticsearchService.createIndexWithAlias();
 
             singleIndexElasticsearchService.addToIndex(DataChangeProcessingMode.BLOCKING, Arrays.asList(
-                    DocumentBuilder.id(1).put("user", "Jane Doe").put("tweet", "Tweet A").put("likes", 10).build(),
-                    DocumentBuilder.id(2).put("user", "Jane Doe").put("tweet", "Tweet B").put("likes", 101).build(),
+                    DocumentBuilder.id(1).put("user", "Jeanne d’Arc").put("tweet", "Tweet A").put("likes", 10).build(),
+                    DocumentBuilder.id(2).put("user", "Jeanne d’Arc").put("tweet", "Tweet B").put("likes", 101).build(),
                     DocumentBuilder.id(3).put("user", "John Doe").put("tweet", "Tweet C").put("likes", 8).build(),
                     DocumentBuilder.id(4).put("user", "John Doe").put("tweet", "Tweet D").put("likes", 99).build(),
-                    DocumentBuilder.id(5).put("user", "Jane Doe").put("tweet", "Tweet E").put("likes", 5).build(),
-                    DocumentBuilder.id(6).put("user", "Jane Doe").put("tweet", "Tweet F").put("likes", 16).build()
+                    DocumentBuilder.id(5).put("user", "Jeanne d’Arc").put("tweet", "Tweet E").put("likes", 5).build(),
+                    DocumentBuilder.id(6).put("user", "Jeanne d’Arc").put("tweet", "Tweet F").put("likes", 16).build()
             ));
 
             final Expression expression = new ValueExpression("tweet", ValueExpression.Comparison.LIKE, "Tweet");
