@@ -100,7 +100,7 @@ public class Collapse {
     }
 
     private void search(Expression expression, SearchParameter searchParameter) {
-        final SearchResult searchResultWithoutCollapsing = singleIndexElasticsearchService.search(expression, searchParameter);
-        LOGGER.info(searchResultWithoutCollapsing.toString());
+        final SearchResult searchResult = singleIndexElasticsearchService.search(expression, searchParameter);
+        LOGGER.info(searchResult.toString());
     }
 }
