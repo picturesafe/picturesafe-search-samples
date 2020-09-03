@@ -39,7 +39,7 @@ public class Config {
                 FieldConfiguration.ID_FIELD,
                 FieldConfiguration.FULLTEXT_FIELD,
                 StandardFieldConfiguration.builder("article", ElasticsearchType.NESTED)
-                        .nestedFields(
+                        .innerFields(
                                 StandardFieldConfiguration.builder("title", ElasticsearchType.TEXT).copyToFulltext(true).sortable(true).build(),
                                 StandardFieldConfiguration.builder("caption", ElasticsearchType.TEXT).copyToFulltext(true).build(),
                                 StandardFieldConfiguration.builder("author", ElasticsearchType.TEXT).copyToFulltext(true).build(),
