@@ -24,6 +24,7 @@ import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.expression.MustNotExpression;
 import de.picturesafe.search.expression.ValueExpression;
 import de.picturesafe.search.parameter.SearchParameter;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ import java.util.Arrays;
 
 @Component
 @ComponentScan
-public class SearchMustNotExpression {
+public class SearchMustNotExpression implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchMustNotExpression.class);
 
@@ -49,7 +50,8 @@ public class SearchMustNotExpression {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
 

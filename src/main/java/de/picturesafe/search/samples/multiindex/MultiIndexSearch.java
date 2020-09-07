@@ -23,6 +23,7 @@ import de.picturesafe.search.elasticsearch.model.SearchResult;
 import de.picturesafe.search.expression.FulltextExpression;
 import de.picturesafe.search.expression.ValueExpression;
 import de.picturesafe.search.parameter.SearchParameter;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ import static de.picturesafe.search.samples.multiindex.Config.SECOND_INDEX_ALIAS
 
 @Component
 @ComponentScan
-public class MultiIndexSearch {
+public class MultiIndexSearch implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiIndexSearch.class);
 
@@ -51,7 +52,8 @@ public class MultiIndexSearch {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             elasticsearchService.createIndexWithAlias(FIRST_INDEX_ALIAS);
             elasticsearchService.createIndexWithAlias(SECOND_INDEX_ALIAS);

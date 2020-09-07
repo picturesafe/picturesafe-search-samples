@@ -23,6 +23,7 @@ import de.picturesafe.search.elasticsearch.model.SearchResult;
 import de.picturesafe.search.expression.DayExpression;
 import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.parameter.SearchParameter;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ import java.util.Date;
 
 @Component
 @ComponentScan
-public class SearchDayExpression {
+public class SearchDayExpression implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchDayExpression.class);
 
@@ -50,7 +51,8 @@ public class SearchDayExpression {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
 
