@@ -28,6 +28,7 @@ import de.picturesafe.search.expression.FulltextExpression;
 import de.picturesafe.search.parameter.SearchParameter;
 import de.picturesafe.search.parameter.SortOption;
 import de.picturesafe.search.parameter.aggregation.DateRangeAggregation;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ import java.util.stream.LongStream;
 
 @Component
 @ComponentScan
-public class SearchWithDateRangeAggregation {
+public class SearchWithDateRangeAggregation implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchWithDateRangeAggregation.class);
 
@@ -59,7 +60,8 @@ public class SearchWithDateRangeAggregation {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
             createTestRecords();

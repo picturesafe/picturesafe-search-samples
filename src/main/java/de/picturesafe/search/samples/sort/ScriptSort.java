@@ -26,6 +26,7 @@ import de.picturesafe.search.parameter.ScriptDefinition;
 import de.picturesafe.search.parameter.ScriptSortOption;
 import de.picturesafe.search.parameter.SearchParameter;
 import de.picturesafe.search.parameter.SortOption;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ import java.util.Date;
 
 @Component
 @ComponentScan
-public class ScriptSort {
+public class ScriptSort implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScriptSort.class);
 
@@ -53,7 +54,8 @@ public class ScriptSort {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
 

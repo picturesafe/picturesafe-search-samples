@@ -23,6 +23,7 @@ import de.picturesafe.search.elasticsearch.model.SearchResult;
 import de.picturesafe.search.expression.Expression;
 import de.picturesafe.search.expression.InExpression;
 import de.picturesafe.search.parameter.SearchParameter;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ import java.util.Arrays;
 
 @Component
 @ComponentScan
-public class SearchInExpression {
+public class SearchInExpression implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchInExpression.class);
 
@@ -48,7 +49,8 @@ public class SearchInExpression {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
 

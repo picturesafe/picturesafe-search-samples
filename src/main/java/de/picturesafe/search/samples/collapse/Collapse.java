@@ -26,6 +26,7 @@ import de.picturesafe.search.parameter.CollapseOption;
 import de.picturesafe.search.parameter.InnerHitsOption;
 import de.picturesafe.search.parameter.SearchParameter;
 import de.picturesafe.search.parameter.SortOption;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ import java.util.Arrays;
 
 @Component
 @ComponentScan
-public class Collapse {
+public class Collapse implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Collapse.class);
 
@@ -51,7 +52,8 @@ public class Collapse {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
 

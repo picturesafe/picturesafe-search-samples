@@ -27,6 +27,7 @@ import de.picturesafe.search.expression.FulltextExpression;
 import de.picturesafe.search.parameter.SearchParameter;
 import de.picturesafe.search.parameter.SortOption;
 import de.picturesafe.search.parameter.aggregation.TermsAggregation;
+import de.picturesafe.search.samples.PicturesafeSearchSample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ import java.util.stream.LongStream;
 
 @Component
 @ComponentScan
-public class SearchWithTermsAggregation {
+public class SearchWithTermsAggregation implements PicturesafeSearchSample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchWithTermsAggregation.class);
 
@@ -53,7 +54,8 @@ public class SearchWithTermsAggregation {
         }
     }
 
-    private void run() {
+    @Override
+    public void run() {
         try {
             singleIndexElasticsearchService.createIndexWithAlias();
             createTestRecords();
